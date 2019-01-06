@@ -30,7 +30,7 @@ export default {
       return 'svg-icon svg-icon--' + this.name;
     }
   }
-};
+}
 </script>
 
 <style>

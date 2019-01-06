@@ -9,24 +9,23 @@
 
 <script>
 export default {
-    name: 'search-box',
-    data () {
-        return {
-            searchText: ''
-        }
-    },
-    props: {
-        placeholder: {
-            type: String,
-            default: '请输入学生姓名'
-        },
-        size: {
-            type: String
-        }
+  name: 'search-box',
+  data() {
+    return {
+      searchText: ''
     }
+  },
+  props: {
+    placeholder: {
+      type: String,
+      default: '请输入学生姓名'
+    },
+    size: {
+      type: String
+    }
+  }
 }
 </script>
-
 
 <style lang="scss" scoped>
 .search-box {
@@ -63,9 +62,10 @@ export default {
     }
   }
   &.small {
-      input, button {
-          height: 30px;
-      }
+    input,
+    button {
+      height: 30px;
+    }
   }
 }
 </style>

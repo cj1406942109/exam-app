@@ -125,7 +125,7 @@ export default {
       console.log(text)
     },
     goStudentDetail (item) {
-      console.log(item)
+      this.$router.push({ name: 'student', params: { id: 123456 } })
     }
   }
 }
@@ -133,13 +133,6 @@ export default {
 
 <style lang="scss" scoped>
   .page-main {
-    max-width: 1200px;
-    min-width: 850px;
-    margin: 0 auto;
-    height: calc(100vh - 62px);
-    box-sizing: border-box;
-    padding: 0 50px;
-    background-color: #fff;
     .option-wrapper {
       height: 100px;
       display: flex;
@@ -185,18 +178,6 @@ export default {
       }
       .student-list-wrapper {
         padding: 30px 40px;
-        .finished .svg-icon{
-          color: #08A7A1;
-        }
-        .correcting .svg-icon{
-          color: #02A1F3;
-        }
-        .not-uploaded .svg-icon{
-          color: #DDDDDD;
-        }
-        .exception .svg-icon{
-          color: #FF6468;
-        }
         .search-wrapper {
           display: flex;
           justify-content: space-between;
