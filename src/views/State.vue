@@ -2,16 +2,16 @@
   <div class="page-wrapper">
     <AppHeader />
     <div class="page-main">
-      <list-item title="2019年初一英语考试" tag="初中英语" description="图片上传于2019-01-03 10:04">
-        <button class="option-btn btn-primary" @click="pageJump('student')">返回</button>
+      <list-item title="2019年初一英语考试" tag="初中英语" state="图片上传于2019-01-03 10:04">
+        <option-btn @click="pageJump('student')" type="btn-primary">返回</option-btn>
       </list-item>
       <div class="state-wrapper">
         <div class="current-state">
           <div class="error-wrapper" v-if="false">
             <p class="error-title color-error"><svg-icon name="error"></svg-icon>批改图片异常终止</p>
             <p class="error-subtitle">异常原因：图片过于模糊</p>
-            <button class="option-btn btn-success">重新上传</button>
-            <button class="option-btn btn-primary">放弃批改</button>
+            <option-btn type="btn-success">重新上传</option-btn>
+            <option-btn type="btn-primary">放弃批改</option-btn>
           </div>
           <div class="normal-wrapper color-success" v-else>
             <img src="./loading.png" alt="批改中">

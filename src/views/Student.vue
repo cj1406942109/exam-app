@@ -8,23 +8,23 @@
           <p>17823423421</p>
         </div>
         <div>
-          <button class="option-btn btn-info btn-medium btn-with-icon" @click="pageJump('upload')"><svg-icon name="upload"></svg-icon>上传图片批改</button>
-          <button class="option-btn btn-primary" @click="pageJump('home')">返回</button>
+          <option-btn @click="pageJump('upload')" type="btn-info btn-medium btn-with-icon"><svg-icon name="upload"></svg-icon>上传图片批改</option-btn>
+          <option-btn @click="pageJump('home')" type="btn-primary">返回</option-btn>
         </div>
       </div>
       <div class="exam-list">
-        <list-item title="2019年初一英语考试" tag="初中英语" description="图片上传于2019-01-03 10:04">
-          <button class="option-btn btn-info" @click="pageJump('state')">批改中</button>
+        <list-item title="2019年初一英语考试" tag="初中英语" state="图片上传于2019-01-03 10:04">
+          <option-btn @click="pageJump('state')" type="btn-info">批改中</option-btn>
         </list-item>
-        <list-item title="2019年初一英语考试" tag="初中英语" description="图片上传于2019-01-03 10:04">
-          <button class="option-btn btn-success btn-with-icon"><svg-icon name="download"></svg-icon>下载报告</button>
-          <button class="option-btn btn-success">查看成绩</button>
+        <list-item title="2019年初一英语考试" tag="初中英语" state="图片上传于2019-01-03 10:04">
+          <option-btn type="btn-success btn-with-icon"><svg-icon name="download"></svg-icon>下载报告</option-btn>
+          <option-btn type="btn-success">查看成绩</option-btn>
         </list-item>
-        <list-item title="2019年初一英语考试" tag="初中英语" description="图片上传于2019-01-03 10:04">
-          <button class="option-btn btn-error">批改异常</button>
+        <list-item title="2019年初一英语考试" tag="初中英语" state="图片上传于2019-01-03 10:04">
+          <option-btn type="btn-error">批改异常</option-btn>
         </list-item>
-        <list-item title="2019年初一英语考试" tag="初中英语" description="图片上传于2019-01-03 10:04">
-          <button class="option-btn btn-info">批改中</button>
+        <list-item title="2019年初一英语考试" tag="初中英语" state="图片上传于2019-01-03 10:04">
+          <option-btn @click="pageJump('state')" type="btn-info">批改中</option-btn>
         </list-item>
       </div>
     </div>

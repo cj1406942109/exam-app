@@ -2,7 +2,7 @@
   <div class="list-item">
       <div class="list-info">
         <h3>{{title}}</h3>
-        <p><span>{{tag}}</span>{{description}}</p>
+        <p><span>{{tag}}</span>{{state}}</p>
       </div>
       <div class="list-btn">
         <slot></slot>
@@ -22,7 +22,7 @@ export default {
       type: String,
       required: true
     },
-    description: {
+    state: {
       type: String,
       required: true
     }

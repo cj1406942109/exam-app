@@ -2,17 +2,16 @@
   <div class="page-wrapper">
     <AppHeader />
     <div class="page-main">
-      <page-nav-bar>
-        <svg-icon name="exclamation"></svg-icon>
+      <page-info-bar>
         请上传
         <strong>杨旭辉</strong>同学本次考试的
         <strong>3张</strong>图片
         <template slot="btn">
-          <button class="option-btn btn-primary" @click="pageJump('upload')">返回</button>
+          <option-btn @click="pageJump('upload')" type="btn-primary">返回</option-btn>
         </template>
-      </page-nav-bar>
-      <list-item title="2019年初一英语考试" tag="初中英语" description="图片上传于2019-01-03 10:04">
-        <button class="option-btn btn-success btn-medium" @click="pageJump('')">查看考试详情</button>
+      </page-info-bar>
+      <list-item title="2019年初一英语考试" tag="初中英语" state="图片上传于2019-01-03 10:04">
+        <option-btn @click="pageJump('exam-detail')" type="btn-success btn-medium">查看考试详情</option-btn>
       </list-item>
       <div class="code-area">
         <p>使用手机拍照上传答题卡</p>
@@ -26,14 +25,14 @@
 <script>
 // @ is an alias to /src
 import AppHeader from '@/components/Header'
-import PageNavBar from '@/components/PageNavBar'
+import PageInfoBar from '@/components/PageInfoBar'
 import ListItem from '@/components/ListItem'
 
 export default {
   name: 'upload-scan',
   components: {
     AppHeader,
-    PageNavBar,
+    PageInfoBar,
     ListItem
   },
   methods: {
@@ -47,7 +46,7 @@ export default {
 <style lang="scss" scoped>
 .page-main {
   padding: 20px;
-  .page-nav-bar {
+  .page-info-bar {
     .svg-icon {
       margin-right: 10px;
     }

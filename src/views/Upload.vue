@@ -2,41 +2,17 @@
   <div class="page-wrapper">
     <AppHeader />
     <div class="page-main">
-      <page-nav-bar>
-        <svg-icon name="exclamation"></svg-icon>
-        请选择
-        <strong>杨旭辉</strong>同学参加的考试，并提交对应的答题卡图片
-        <template slot="btn">
-          <button class="option-btn btn-primary" @click="pageJump('student')">返回</button>
-        </template>
-      </page-nav-bar>
-      <div class="filter-wrapper">
-        <div class="filter-part">
-          <div class="filter-title">学段：</div>
-          <ul>
-            <li><button class="selected">全部</button></li>
-            <li><button>小学</button></li>
-            <li><button>初中</button></li>
-            <li><button>高中</button></li>
-          </ul>
-        </div>
-        <div class="filter-part">
-          <div class="filter-title">学科：</div>
-          <ul>
-            <li><button>全部</button></li>
-            <li><button>英语</button></li>
-            <li><button>数学</button></li>
-            <li><button>语文</button></li>
-          </ul>
-        </div>
-      </div>
-      <search-box placeholder="请输入考试名称" v-on:search-text="searchExam"></search-box>
+      <page-info-bar @btn-click="pageJump('student')" btn-text="返回">
+        请选择<strong>杨旭辉</strong>同学参加的考试，并提交对应的答题卡图片
+      </page-info-bar>
+      <filter-box :data="filterList" @filter-change="handleFilterChange"></filter-box>
+      <search-box placeholder="请输入考试名称" @search-text="searchExam"></search-box>
       <div class="exam-list">
-        <list-item title="2019年初一英语考试" tag="初中英语" description="图片上传于2019-01-03 10:04">
-          <button class="option-btn btn-success" @click="pageJump('upload-scan')">去上传</button>
+        <list-item title="2019年初一英语考试" tag="初中英语" state="图片上传于2019-01-03 10:04">
+          <option-btn @click="pageJump('upload-scan')" type="btn-success">去上传</option-btn>
         </list-item>
-        <list-item title="2019年初一英语考试" tag="初中英语" description="图片上传于2019-01-03 10:04">
-          <button class="option-btn btn-primary" @click="reuploadPic">已上传</button>
+        <list-item title="2019年初一英语考试" tag="初中英语" state="图片上传于2019-01-03 10:04">
+          <option-btn @click="reuploadPic" type="btn-primary">已上传</option-btn>
         </list-item>
       </div>
     </div>
@@ -46,7 +22,8 @@
 <script>
 // @ is an alias to /src
 import AppHeader from '@/components/Header'
-import PageNavBar from '@/components/PageNavBar'
+import PageInfoBar from '@/components/PageInfoBar'
+import FilterBox from '@/components/FilterBox'
 import SearchBox from '@/components/SearchBox'
 import ListItem from '@/components/ListItem'
 
@@ -54,13 +31,33 @@ export default {
   name: 'upload',
   components: {
     AppHeader,
-    PageNavBar,
+    PageInfoBar,
+    FilterBox,
     SearchBox,
     ListItem
+  },
+    data () {
+    return {
+      filterList: [
+        {
+          type: '学段',
+          value: ['全部', '小学', '初中', '高中'],
+          selected: '全部'
+        },
+        {
+          type: '学科',
+          value: ['全部', '英语', '数学', '语文'],
+          selected: '全部'
+        }
+      ]
+    }
   },
   methods: {
     pageJump(name) {
       this.$router.push({ name });
+    },
+    handleFilterChange(value) {
+      console.log(value)
     },
     searchExam(text) {
       console.log(text)
@@ -82,59 +79,8 @@ export default {
 <style lang="scss" scoped>
 .page-main {
   padding: 20px;
-  .page-nav-bar {
-    .svg-icon {
-      margin-right: 10px;
-    }
-    strong {
-      color: #FF6E36;
-      margin: 0 10px;
-    }
-  }
-  .filter-wrapper {
-    height: 120px;
-    border: 1px solid #eee;
-    border-radius: 5px;
+  .filter-box {
     margin-top: 20px;
-    padding: 0 20px;
-    .filter-part {
-      height: 60px;
-      line-height: 60px;
-      border-bottom: 1px dashed #eee;
-      display: flex;
-      &:last-child {
-        border-bottom: none;
-      }
-      .filter-title {
-        font-weight: bold;
-      }
-      ul {
-        display: flex;
-        align-items: center;
-        li {
-          margin: 0 10px;
-          button {
-            cursor: pointer;
-            border: 1px solid transparent;
-            background-color: transparent;
-            font-size: 16px;
-            padding: 5px 10px;
-            border-radius: 3px;
-            outline: none;
-            &:hover {
-              color: #08A7A1;
-              border: 1px solid #08A7A1;
-              background-color: rgba(8, 167, 162, 0.05);
-            }
-            &.selected {
-              color: #fff;
-              border: 1px solid #11D0C4;
-              background-color: #11D0C4;
-            }
-          }
-        }
-      }
-    }
   }
   .search-box {
     margin-top: 10px;

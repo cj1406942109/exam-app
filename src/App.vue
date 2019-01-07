@@ -72,4 +72,16 @@
     }
   }
 }
+.exam-tabs.el-tabs {
+  .el-tabs__header {
+    margin: 0!important;
+    border-bottom-right-radius: 5px;
+  }
+  .el-tabs__item {
+    min-width: 100px;
+    &.is-active {
+      font-weight: bold;
+    }
+  }
+}
 </style>

@@ -52,6 +52,7 @@ $headerHeight: 50px;
       height: $headerHeight;
       vertical-align: top;
       margin-right: 100px;
+      margin-left: 50px;
     }
     a {
       color: #333;

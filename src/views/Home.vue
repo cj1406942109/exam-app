@@ -10,7 +10,7 @@
           <li v-if="studentList.lenth === 0">更早</li>
           <li v-else>更多学生</li>
         </ul>
-        <button @click="addStudentHandler" class="option-btn btn-success btn-medium btn-with-icon"><svg-icon name="plus"></svg-icon>添加学生</button>
+        <option-btn @click="addStudentHandler" type="btn-success btn-medium btn-with-icon"><svg-icon name="plus"></svg-icon>添加学生</option-btn>
       </div>
       <div class="student-wrapper">
         <div v-if="studentList.length === 0" class="no-student">
@@ -19,7 +19,7 @@
         </div>
         <div v-else class="student-list-wrapper">
           <div class="search-wrapper">
-            <search-box v-on:search-text="searchStudent"></search-box>
+            <search-box @search-text="searchStudent"></search-box>
             <ul class="status-indicators">
               <li><svg-icon name="square" class="color-success"></svg-icon>批改完成</li>
               <li><svg-icon name="square" class="color-info"></svg-icon>批改中</li>
@@ -56,7 +56,7 @@
             </el-form>
           </el-tab-pane>
           <el-tab-pane label="选择已有学生" name="exist">
-            <search-box v-on:search-text="searchStudent" size="small"></search-box>
+            <search-box @search-text="searchStudent" size="small"></search-box>
             <el-table :data="studentsInSystem" style="width: 100%" max-height="200">
               <el-table-column align="right" label=" " width="50">
                 <!-- eslint-disable -->
