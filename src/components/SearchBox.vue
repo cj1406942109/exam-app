@@ -55,13 +55,13 @@ export default {
     border: 1px solid #99a9bf;
     border-left: none;
     font-size: 1.2em;
-    background-color: #fff;
+    background-color: #f9fafc;
     outline: none;
     .svg-icon {
       margin-right: 5px;
     }
     &:hover {
-      background-color: #f9fafc;
+      // background-color: #f9fafc;
     }
   }
   &.small {

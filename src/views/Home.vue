@@ -5,30 +5,31 @@
       <div class="option-wrapper">
         <ul>
           <li>今天</li>
-          <li>{{moment().subtract(1, 'days').format('M 月 D 日')}}</li>
-          <li>{{moment().subtract(2, 'days').format('M 月 D 日')}}</li>
-          <li>更早</li>
+          <li>{{moment().subtract(1, 'days').format('M月D日')}}</li>
+          <li>{{moment().subtract(2, 'days').format('M月D日')}}</li>
+          <li v-if="studentList.lenth === 0">更早</li>
+          <li v-else>更多学生</li>
         </ul>
-        <button @click="addStudentHandler"><svg-icon name="plus"></svg-icon>添加学生</button>
+        <button @click="addStudentHandler" class="option-btn btn-success btn-medium btn-with-icon"><svg-icon name="plus"></svg-icon>添加学生</button>
       </div>
       <div class="student-wrapper">
         <div v-if="studentList.length === 0" class="no-student">
-          <img src="./no-student.png" alt="尚未添加考生">
+          <img src="./no-content.png" alt="尚未添加考生">
           <p>尚未添加考生</p>
         </div>
         <div v-else class="student-list-wrapper">
           <div class="search-wrapper">
             <search-box v-on:search-text="searchStudent"></search-box>
             <ul class="status-indicators">
-              <li class="finished"><svg-icon name="square"></svg-icon>批改完成</li>
-              <li class="correcting"><svg-icon name="square"></svg-icon>批改中</li>
-              <li class="not-uploaded"><svg-icon name="square"></svg-icon>未上传</li>
-              <li class="exception"><svg-icon name="square"></svg-icon>异常</li>
+              <li><svg-icon name="square" class="color-success"></svg-icon>批改完成</li>
+              <li><svg-icon name="square" class="color-info"></svg-icon>批改中</li>
+              <li><svg-icon name="square" class="color-default"></svg-icon>未上传</li>
+              <li><svg-icon name="square" class="color-error"></svg-icon>异常</li>
             </ul>
           </div>
           <div class="student-list">
-            <div class="student-box" v-for="item in studentList" :key="item.id" :class="item.status" @click="goStudentDetail(item)">
-              <svg-icon name="user"></svg-icon>
+            <div class="student-box" v-for="item in studentList" :key="item.id" @click="goStudentDetail(item)">
+              <svg-icon name="user" :class="'color-' + item.status"></svg-icon>
               <p>{{item.name}}</p>
             </div>
           </div>
@@ -100,10 +101,10 @@ export default {
       },
       studentList: [{
         name: '杨旭辉',
-        status: 'finished'
+        status: 'success'
       },{
         name: '黄子英',
-        status: 'correcting'
+        status: 'info'
       }],
       studentsInSystem: [
         { name: '杨旭辉', phone: '13753862869', createTime: '2019-01-03 10:04'},
@@ -138,21 +139,6 @@ export default {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      button {
-        border-radius: 3px;
-        color: #08A7A1;
-        border: 1px solid #08A7A1;
-        background-color: transparent;
-        padding: 10px 20px;
-        cursor: pointer;
-        outline: none;
-        .svg-icon {
-          margin-right: 10px;
-        }
-        &:hover {
-          background-color: rgba(8, 167, 162, 0.05);
-        }
-      }
       ul {
         display: flex;
         align-items: flex-end;

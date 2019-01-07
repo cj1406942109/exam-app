@@ -4,16 +4,17 @@
     <div class="page-main">
       <page-nav-bar>
         <svg-icon name="exclamation"></svg-icon>
-        请选择<strong>杨旭辉</strong>同学参加的考试，并提交对应的答题卡图片
+        请选择
+        <strong>杨旭辉</strong>同学参加的考试，并提交对应的答题卡图片
         <template slot="btn">
-          <button @click="returnStudent">返回</button>
+          <button class="option-btn btn-primary" @click="pageJump('student')">返回</button>
         </template>
       </page-nav-bar>
       <div class="filter-wrapper">
         <div class="filter-part">
           <div class="filter-title">学段：</div>
           <ul>
-            <li><button>全部</button></li>
+            <li><button class="selected">全部</button></li>
             <li><button>小学</button></li>
             <li><button>初中</button></li>
             <li><button>高中</button></li>
@@ -32,10 +33,10 @@
       <search-box placeholder="请输入考试名称" v-on:search-text="searchExam"></search-box>
       <div class="exam-list">
         <list-item title="2019年初一英语考试" tag="初中英语" description="图片上传于2019-01-03 10:04">
-          <button class="option-btn finished" @click="uploadScan">去上传</button>
+          <button class="option-btn btn-success" @click="pageJump('upload-scan')">去上传</button>
         </list-item>
         <list-item title="2019年初一英语考试" tag="初中英语" description="图片上传于2019-01-03 10:04">
-          <button class="option-btn plain" @click="reuploadPic">已上传</button>
+          <button class="option-btn btn-primary" @click="reuploadPic">已上传</button>
         </list-item>
       </div>
     </div>
@@ -50,7 +51,7 @@ import SearchBox from '@/components/SearchBox'
 import ListItem from '@/components/ListItem'
 
 export default {
-  name: 'upload-pic',
+  name: 'upload',
   components: {
     AppHeader,
     PageNavBar,
@@ -58,8 +59,8 @@ export default {
     ListItem
   },
   methods: {
-    returnStudent() {
-      this.$router.push({ name: 'student' });
+    pageJump(name) {
+      this.$router.push({ name });
     },
     searchExam(text) {
       console.log(text)
@@ -70,12 +71,9 @@ export default {
         confirmButtonText: '重新上传',
         cancelButtonText: '取消'
       }).then(() => {
-        this.uploadScan()
+        this.pageJump('upload-scan')
       }).catch(() => {
       })
-    },
-    uploadScan() {
-      this.$router.push({ name: 'upload-scan' });
     }
   }
 }
@@ -89,6 +87,7 @@ export default {
       margin-right: 10px;
     }
     strong {
+      color: #FF6E36;
       margin: 0 10px;
     }
   }
@@ -96,7 +95,7 @@ export default {
     height: 120px;
     border: 1px solid #eee;
     border-radius: 5px;
-    margin-top: 10px;
+    margin-top: 20px;
     padding: 0 20px;
     .filter-part {
       height: 60px;
@@ -122,10 +121,15 @@ export default {
             padding: 5px 10px;
             border-radius: 3px;
             outline: none;
-            &.selected, &:hover {
+            &:hover {
               color: #08A7A1;
               border: 1px solid #08A7A1;
               background-color: rgba(8, 167, 162, 0.05);
+            }
+            &.selected {
+              color: #fff;
+              border: 1px solid #11D0C4;
+              background-color: #11D0C4;
             }
           }
         }

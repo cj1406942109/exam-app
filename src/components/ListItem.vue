@@ -44,6 +44,7 @@ export default {
       overflow: hidden;
       h3 {
         margin: 0;
+        font-weight: normal;
       }
       p {
         margin: 30px 0 0;

@@ -5,7 +5,7 @@
         <img src="../assets/logo.png" alt="logo">
         <template v-for="item in navList">
           <router-link
-            v-if="!item.meta.hideTab"
+            v-if="item.meta && item.meta.showTab"
             :key="item.id"
             :to="item.path"
             active-class="active-nav"
@@ -32,11 +32,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$headerHeight: 60px;
+$headerHeight: 50px;
 
 .app-header {
   height: $headerHeight;
   background-color: #fff;
+  padding: 10px 0;
   border-bottom: 1px solid #eee;
   nav {
     max-width: 1200px;

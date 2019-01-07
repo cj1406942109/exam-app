@@ -5,82 +5,16 @@
 </template>
 
 <style lang="scss">
-body {
-  margin: 0;
-  font-family: "Microsoft YaHei", "Helvetica Neue", Helvetica, "Nimbus Sans L",
-    Arial, "Liberation Sans", "Hiragino Sans GB", "Source Han Sans CN",
-    "Source Han Sans SC", "Microsoft YaHei", "微软雅黑", "Wenquanyi Micro Hei",
-    "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp",
-    sans-serif;
-  background-color: #fafafa;
-}
-a {
-  text-decoration: none;
-}
-ul {
-  margin: 0;
-  padding: 0;
-  li {
-    list-style: none;
-  }
-}
-
 .page-main {
   max-width: 1200px;
   min-width: 850px;
   margin: 0 auto;
-  height: calc(100vh - 62px);
+  height: calc(100vh - 72px);
   box-sizing: border-box;
   padding: 0 50px;
   background-color: #fff;
 }
 
-// 全局样式
-
-.finished .svg-icon{
-  color: #08A7A1;
-}
-.correcting .svg-icon{
-  color: #02A1F3;
-}
-.not-uploaded .svg-icon{
-  color: #DDDDDD;
-}
-.exception .svg-icon{
-  color: #FF6468;
-}
-
-.option-btn {
-  color: #fff;
-  width: 100px;
-  font-size: 14px;
-  padding: 8px 0;
-  border: 1px solid transparent;
-  outline: none;
-  border-radius: 3px;
-  cursor: pointer;
-  .svg-icon {
-    margin-right: 5px;
-    color: #fff;
-  }
-  &.finished {
-    background-color: #08A7A1;
-  }
-  &.correcting {
-    background-color: #02A1F3;
-  }
-  &.not-uploaded {
-    background-color: #DDDDDD;
-  }
-  &.exception {
-    background-color: #FF6468;
-  }
-  &.plain {
-    color: #08A7A1;
-    border: 1px solid #08A7A1;
-    background-color: #fff;
-  }
-}
 // 覆盖element样式
 .el-dialog {
   .el-dialog__body {
@@ -126,7 +60,7 @@ ul {
     padding-left: 20px;
     span::before {
       // content: url(./assets/icons/exclamation.svg)!important;
-      content: url("./assets/test.png");
+      content: url("./assets/exclamation.png");
       margin-right: 5px;
       vertical-align: -0.2em;
     }

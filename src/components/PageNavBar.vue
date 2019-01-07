@@ -1,6 +1,6 @@
 <template>
   <div class="page-nav-bar">
-    <div class="nav-info">
+    <div class="nav-info bg-warning color-warning">
       <slot></slot>
     </div>
     <div class="nav-btn">
@@ -18,28 +18,15 @@ export default {
 
 <style lang="scss" scoped>
 .page-nav-bar {
-  height: 50px;
-  padding: 0 20px;
-  background-color: #08a7a1;
-  border-radius: 5px;
   color: #fff;
-  line-height: 50px;
   display: flex;
   justify-content: space-between;
-  button {
-    color: #08a7a1;
-    cursor: pointer;
-    font-size: 14px;
-    background-color: #fff;
-    border: none;
-    min-width: 100px;
-    outline: none;
-    padding: 8px 20px;
-    border-radius: 18px;
-    margin-right: 20px;
-    .svg-icon {
-      margin-right: 5px;
-    }
+  .nav-info {
+    padding: 8px 10px;
+    border-radius: 3px;
+    width: calc(100% - 150px);
+    min-width: 600px;
+    overflow: hidden;
   }
 }
 </style>
