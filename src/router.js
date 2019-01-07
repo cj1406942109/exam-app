@@ -23,6 +23,18 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '@/views/Student')
   },
   {
+    path: '/home/:id/upload',
+    name: 'upload-pic',
+    meta: { hideTab: true },
+    component: () => import(/* webpackChunkName: "about" */ '@/views/Upload')
+  },
+  {
+    path: '/home/:id/upload/scan',
+    name: 'upload-scan',
+    meta: { hideTab: true },
+    component: () => import(/* webpackChunkName: "about" */ '@/views/UploadScan')
+  },
+  {
     path: '/exam',
     name: 'exam',
     meta: { title: '考试' },

@@ -51,19 +51,17 @@ ul {
 }
 
 .option-btn {
+  color: #fff;
+  width: 100px;
+  font-size: 14px;
+  padding: 8px 0;
+  border: 1px solid transparent;
+  outline: none;
+  border-radius: 3px;
+  cursor: pointer;
   .svg-icon {
     margin-right: 5px;
     color: #fff;
-  }
-  &.finished, &.correcting, &.not-uploaded, &.exception {
-    color: #fff;
-    width: 120px;
-    font-size: 14px;
-    padding: 12px 0;
-    border: none;
-    outline: none;
-    border-radius: 3px;
-    cursor: pointer;
   }
   &.finished {
     background-color: #08A7A1;
@@ -76,6 +74,11 @@ ul {
   }
   &.exception {
     background-color: #FF6468;
+  }
+  &.plain {
+    color: #08A7A1;
+    border: 1px solid #08A7A1;
+    background-color: #fff;
   }
 }
 // 覆盖element样式
@@ -111,6 +114,27 @@ ul {
     td,
     th {
       padding: 5px 0;
+    }
+  }
+}
+// 确认弹窗按钮宽度重写
+.el-message-box {
+  width: 300px!important;
+  padding: 20px 0!important;
+  .el-message-box__title {
+    font-size: 16px;
+    padding-left: 20px;
+    span::before {
+      // content: url(./assets/icons/exclamation.svg)!important;
+      content: url("./assets/test.png");
+      margin-right: 5px;
+      vertical-align: -0.2em;
+    }
+  }
+  .el-message-box__btns {
+    padding-right: 30px;
+    button {
+      width: 80px!important;
     }
   }
 }

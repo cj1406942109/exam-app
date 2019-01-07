@@ -34,9 +34,12 @@ export default {
     border: none;
     min-width: 100px;
     outline: none;
-    padding: 10px 20px;
+    padding: 8px 20px;
     border-radius: 18px;
     margin-right: 20px;
+    .svg-icon {
+      margin-right: 5px;
+    }
   }
 }
 </style>

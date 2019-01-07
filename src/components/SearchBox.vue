@@ -57,6 +57,9 @@ export default {
     font-size: 1.2em;
     background-color: #fff;
     outline: none;
+    .svg-icon {
+      margin-right: 5px;
+    }
     &:hover {
       background-color: #f9fafc;
     }

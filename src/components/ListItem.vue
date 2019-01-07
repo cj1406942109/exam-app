@@ -36,7 +36,7 @@ export default {
     border: 1px solid #eee;
     // height: 120px;
     border-radius: 5px;
-    padding: 30px;
+    padding: 30px 50px 30px 30px;
     display: flex;
     justify-content: space-between;
     .list-info {
