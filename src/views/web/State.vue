@@ -2,9 +2,9 @@
   <div class="page-wrapper">
     <AppHeader />
     <div class="page-main">
-      <list-item title="2019年初一英语考试" tag="初中英语" state="图片上传于2019-01-03 10:04">
-        <option-btn @click="pageJump('student')" type="btn-primary">返回</option-btn>
-      </list-item>
+      <exam-list-item title="2019年初一英语考试" tag="初中英语" state="图片上传于2019-01-03 10:04">
+        <option-btn @click="myUtils.goBack()" type="btn-primary">返回</option-btn>
+      </exam-list-item>
       <div class="state-wrapper">
         <div class="current-state">
           <div class="error-wrapper" v-if="false">
@@ -35,13 +35,13 @@
 <script>
 // @ is an alias to /src
 import AppHeader from '@/components/Header'
-import ListItem from '@/components/ListItem'
+import ExamListItem from '@/components/ExamListItem'
 
 export default {
   name: 'state',
   components: {
     AppHeader,
-    ListItem
+    ExamListItem
   },
   methods: {
     pageJump(name) {

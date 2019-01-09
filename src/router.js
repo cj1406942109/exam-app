@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/views/Home'
+import Home from '@/views/web/Home'
+import Login from '@/views/web/Login'
 
 Vue.use(Router)
 
@@ -8,6 +9,11 @@ const routes = [
   {
     path: '/',
     redirect: '/login',
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login
   },
   {
     path: '/home',
@@ -18,37 +24,69 @@ const routes = [
   {
     path: '/home/:id',
     name: 'student',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/Student')
+    component: () => import('@/views/web/Student')
   },
   {
     path: '/home/:id/upload',
     name: 'upload',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/Upload')
+    component: () => import('@/views/web/Upload')
   },
   {
-    path: '/home/:id/upload/scan',
+    path: '/home/:id/upload/:examId',
     name: 'upload-scan',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/UploadScan')
+    component: () => import('@/views/web/UploadScan')
   },
   {
-    path: '/home/:id/state',
+    path: '/home/:id/state/:examId',
     name: 'state',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/State')
+    component: () => import('@/views/web/State')
   },
   {
     path: '/exam',
     name: 'exam',
     meta: { title: '考试', showTab: true },
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '@/views/Exam')
+    component: () => import('@/views/web/Exam')
   },
   {
     path: '/exam/:id',
     name: 'exam-detail',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/ExamDetail')
+    component: () => import('@/views/web/ExamDetail')
   },
+  {
+    path: '/exam/:id/report/:studentId',
+    name: 'report',
+    component: () => import('@/views/web/Report')
+  },
+  {
+    path: '/mobile',
+    name: 'mobile-home',
+    component: () => import('@/views/mobile/Home')
+  },
+  {
+    path: '/mobile/select',
+    name: 'select-page',
+    component: () => import('@/views/mobile/Select')
+  },
+  {
+    path: '/mobile/requirement',
+    name: 'photograph-requirement',
+    component: () => import('@/views/mobile/Requirement')
+  },
+  {
+    path: '/mobile/preview',
+    name: 'preview',
+    component: () => import('@/views/mobile/Preview')
+  },
+  {
+    path: '/mobile/photograph',
+    name: 'photograph',
+    component: () => import('@/views/mobile/Photograph')
+  },
+  {
+    path: '/mobile/finish',
+    name: 'finish-page',
+    component: () => import('@/views/mobile/Finish')
+  }
 ]
 
 export {

@@ -2,21 +2,17 @@
   <div class="page-wrapper">
     <AppHeader />
     <div class="page-main">
-      <page-info-bar>
-        请上传
-        <strong>杨旭辉</strong>同学本次考试的
-        <strong>3张</strong>图片
-        <template slot="btn">
-          <option-btn @click="pageJump('upload')" type="btn-primary">返回</option-btn>
-        </template>
+      <page-info-bar @btn-click="myUtils.goBack()" btn-text="返回">
+        请上传<strong>杨旭辉</strong>同学本次考试的<strong>3张</strong>图片
       </page-info-bar>
-      <list-item title="2019年初一英语考试" tag="初中英语" state="图片上传于2019-01-03 10:04">
-        <option-btn @click="pageJump('exam-detail')" type="btn-success btn-medium">查看考试详情</option-btn>
-      </list-item>
+      <exam-list-item title="2019年初一英语考试" tag="初中英语" state="图片上传于2019-01-03 10:04">
+        <option-btn @click="myUtils.pageJump('exam-detail')" type="btn-success btn-medium">查看考试详情</option-btn>
+      </exam-list-item>
       <div class="code-area">
         <p>使用手机拍照上传答题卡</p>
         <img src="./code.png" alt="二维码">
         <p>请扫码二维码</p>
+        <el-button @click="finishScan">测试完成扫码</el-button>
       </div>
     </div>
   </div>
@@ -26,18 +22,18 @@
 // @ is an alias to /src
 import AppHeader from '@/components/Header'
 import PageInfoBar from '@/components/PageInfoBar'
-import ListItem from '@/components/ListItem'
+import ExamListItem from '@/components/ExamListItem'
 
 export default {
   name: 'upload-scan',
   components: {
     AppHeader,
     PageInfoBar,
-    ListItem
+    ExamListItem
   },
   methods: {
-    pageJump(name) {
-      this.$router.push({ name });
+    finishScan() {
+      window.open('#/mobile')
     }
   }
 }
@@ -55,7 +51,7 @@ export default {
       margin: 0 10px;
     }
   }
-  .list-item {
+  .exam-list-item {
     margin-top: 20px;
   }
   .code-area {
@@ -67,6 +63,7 @@ export default {
     flex-direction: column;
     text-align: center;
     justify-content: center;
+    align-items: center;
     p {
       color: #666;
     }

@@ -2,12 +2,12 @@
   <div class="page-wrapper">
     <AppHeader />
     <div class="page-main">
-      <list-item title="2019年初一英语考试" tag="初中英语" state="图片上传于2019-01-03 10:04">
+      <exam-list-item title="2019年初一英语考试" tag="初中英语" state="图片上传于2019-01-03 10:04">
         <dropdown-btn btnText="下载答题卡" @btn-click="downloadAnswerSheet">
           <button>下载答案卷</button>
         </dropdown-btn>
-        <option-btn @click="pageJump('exam')" type="btn-primary">返回</option-btn>
-      </list-item>
+        <option-btn @click="myUtils.goBack()" type="btn-primary">返回</option-btn>
+      </exam-list-item>
       <el-tabs v-model="activeTab" type="card" class="exam-tabs">
         <el-tab-pane label="试题" name="question">试题</el-tab-pane>
         <el-tab-pane label="答案" name="answer">答案</el-tab-pane>
@@ -34,7 +34,7 @@
 <script>
 // @ is an alias to /src
 import AppHeader from '@/components/Header'
-import ListItem from '@/components/ListItem'
+import ExamListItem from '@/components/ExamListItem'
 import DropdownBtn from '@/components/DropdownBtn'
 import PageInfoBar from '@/components/PageInfoBar'
 
@@ -42,7 +42,7 @@ export default {
   name: 'exam',
   components: {
     AppHeader,
-    ListItem,
+    ExamListItem,
     DropdownBtn,
     PageInfoBar
   },
@@ -85,13 +85,6 @@ export default {
   methods: {
     handleFilterChange(value) {
       console.log(value)
-    },
-    pageJump(name) {
-      this.$router.push({ name });
-    },
-    handlePageJump(value) {
-      console.log(value)
-      this.$router.push({ name: 'exam-detail', params: { id: 123456 } })
     },
     downloadAnswerSheet() {
       console.log('下载')

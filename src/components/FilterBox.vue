@@ -2,7 +2,7 @@
   <div class="filter-box">
     <div class="filter-list-wrapper" v-for="item in filterList" :key="item.id">
       <div class="filter-list-title">{{item.type}}</div>
-      <ul class="filter-list-items">
+      <ul class="filter-exam-list-items">
         <li v-for="subItem in removeDuplicate(item.value)" :key="subItem.id">
           <button :class="{selected: subItem === item.selected}" @click="changeFilter(item.type, subItem)">{{subItem}}</button>
         </li>
@@ -73,7 +73,7 @@ export default {
         margin: 0 5px;
       }
     }
-    .filter-list-items {
+    .filter-exam-list-items {
       display: flex;
       align-items: center;
       flex-wrap: wrap;

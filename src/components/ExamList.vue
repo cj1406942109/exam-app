@@ -1,26 +1,26 @@
 <template>
   <div class="exam-list">
     <search-box v-if="!hideSearch" placeholder="请输入考试名称" @search-text="searchExam"></search-box>
-    <list-item v-for="item in examList" :key="item.id"
+    <exam-list-item v-for="item in examList" :key="item.id"
       :title="item.title"
       :tag="item.tag"
       :state="item.state">
       <option-btn  v-for="btn in item.buttons" :key="btn.id"
       @click="triggleClick(btn, item)"
       :type="btn.type">{{btn.text}}</option-btn>
-    </list-item>
+    </exam-list-item>
   </div>
 </template>
 
 <script>
 import SearchBox from '@/components/SearchBox'
-import ListItem from '@/components/ListItem'
+import ExamListItem from '@/components/ExamListItem'
 
 export default {
   name: 'exam-list',
   components: {
     SearchBox,
-    ListItem
+    ExamListItem
   },
   data () {
     return {
@@ -60,7 +60,7 @@ export default {
     margin: 10px 50px 10px 0;
     justify-content: flex-end;
   }
-  .list-item {
+  .exam-list-item {
     margin-bottom: 10px;
     &:last-child {
       margin-bottom: 0;

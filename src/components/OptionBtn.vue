@@ -30,15 +30,19 @@ $color-error: #FF6468;
 $color-success-opacity: rgba(8, 167, 162, 0.05);
 
 .option-btn {
-  color: #fff;
+  color: #666;
   min-width: 100px;
   font-size: 14px;
   padding: 8px 10px;
   border: 1px solid transparent;
+  background-color: #E6E6E6;
   outline: none;
   border-radius: 3px;
   cursor: pointer;
   // 不同背景颜色的按钮
+  &.btn-success, &.btn-info, &.btn-default, &.btn-error {
+    color: #fff;
+  }
   &.btn-success {
     background-color: $color-success;
   }
@@ -68,7 +72,8 @@ $color-success-opacity: rgba(8, 167, 162, 0.05);
     padding: 8px 15px;
   }
   &.btn-large {
-    min-width: 300px;
+    // min-width: 300px;
+    width: 100%;
   }
   &.btn-with-icon {
     .svg-icon {

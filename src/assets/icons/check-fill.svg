@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 10</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-7413.000000, -1469.000000)">
+            <g id="Group-10" transform="translate(7413.000000, 1469.000000)">
+                <circle id="Oval-9" fill="#11D0C4" cx="50" cy="50" r="50"></circle>
+                <path d="M55.3333333,61.2 L55.3333333,23.3333333 C55.3333333,20.3878147 57.721148,18 60.6666667,18 C63.6121853,18 66,20.3878147 66,23.3333333 L66,66.6666667 C66,69.6121853 63.6121853,72 60.6666667,72 C60.6555821,72 60.6445055,71.9999662 60.6334369,71.9998987 C60.6222992,71.9999662 60.6111536,72 60.6,72 L39.4,72 C36.4176624,72 34,69.5823376 34,66.6 C34,63.6176624 36.4176624,61.2 39.4,61.2 L55.3333333,61.2 Z" id="Combined-Shape" fill="#FFFFFF" transform="translate(50.000000, 45.000000) rotate(45.000000) translate(-50.000000, -45.000000) "></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -13,7 +13,14 @@
         </template>
       </div>
       <div class="user-center">
-        <svg-icon name="user"></svg-icon>合心测试
+        <el-popover
+          :visible-arrow="false"
+          placement="bottom-end"
+          width="100"
+          trigger="hover">
+          <span slot="reference"><svg-icon name="user"></svg-icon>合心测试</span>
+          <span style="cursor:pointer" @click="handleLogout"><svg-icon name="power"></svg-icon>退出</span>
+        </el-popover>
       </div>
     </nav>
   </div>
@@ -26,6 +33,12 @@ export default {
   data() {
     return {
       navList: routes
+    }
+  },
+  methods: {
+    handleLogout() {
+      console.log('logout')
+      this.myUtils.pageJump('login')
     }
   }
 }

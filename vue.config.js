@@ -1,4 +1,9 @@
 module.exports = {
+    devServer: {
+        host: '0.0.0.0',
+        disableHostCheck: true
+    },
+
     pluginOptions: {
         svgSprite: {
             /*
@@ -22,7 +27,7 @@ module.exports = {
             pluginOptions: {
                 plainSprite: true
             }    
-        }    
+        }
     },
 
     chainWebpack: config => {
@@ -30,5 +35,13 @@ module.exports = {
         .rule('svg-sprite')
         .use('svgo-loader')
         .loader('svgo-loader')
-    }
+    },
+
+    baseUrl: '',
+    outputDir: undefined,
+    assetsDir: undefined,
+    runtimeCompiler: undefined,
+    productionSourceMap: undefined,
+    parallel: undefined,
+    css: undefined
 };

@@ -4,6 +4,11 @@ import router from './router'
 import '@/plugins'
 import '@/style/index.scss'
 
+import myUtils from '@/utils'
+
+// 全局挂载工具类
+Vue.prototype.myUtils = myUtils
+
 Vue.config.productionTip = false
 
 new Vue({

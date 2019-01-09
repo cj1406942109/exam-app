@@ -1,8 +1,12 @@
 <template>
-  <div class="list-item">
+  <div class="exam-list-item">
       <div class="list-info">
         <h3>{{title}}</h3>
-        <p><span>{{tag}}</span>{{state}}</p>
+        <p :class="{'color-success': student}">
+          <span v-if="tag" class="list-tag color-success">{{tag}}</span>
+          <span v-if="student" class="list-student">{{student}}</span>
+          {{state}}
+        </p>
       </div>
       <div class="list-btn">
         <slot></slot>
@@ -12,15 +16,17 @@
 
 <script>
 export default {
-  name: 'list-item',
+  name: 'exam-list-item',
   props: {
     title: {
       type: String,
       required: true
     },
     tag: {
-      type: String,
-      required: true
+      type: String
+    },
+    student: {
+      type: String
     },
     state: {
       type: String,
@@ -32,7 +38,7 @@ export default {
 
 
 <style lang="scss" scoped>
-.list-item {
+.exam-list-item {
     border: 1px solid #eee;
     // height: 120px;
     border-radius: 5px;
@@ -42,21 +48,27 @@ export default {
     .list-info {
       max-width: 600px;
       overflow: hidden;
+      color: #666;
       h3 {
         margin: 0;
+        color: #333;
         font-weight: normal;
       }
       p {
         margin: 30px 0 0;
-        color: #666;
-        span {
-          color: #08A7A1;
+        .list-tag {
           margin-right: 20px;
           &::before {
             content: '\005B';
           }
           &::after {
             content: '\005D';
+          }
+        }
+        .list-student {
+          margin-right: 20px;
+          &::before {
+            content: '学生：'
           }
         }
       }

@@ -2,18 +2,18 @@
   <div class="page-wrapper">
     <AppHeader />
     <div class="page-main">
-      <page-info-bar @btn-click="pageJump('student')" btn-text="返回">
+      <page-info-bar @btn-click="myUtils.goBack()" btn-text="返回">
         请选择<strong>杨旭辉</strong>同学参加的考试，并提交对应的答题卡图片
       </page-info-bar>
       <filter-box :data="filterList" @filter-change="handleFilterChange"></filter-box>
       <search-box placeholder="请输入考试名称" @search-text="searchExam"></search-box>
       <div class="exam-list">
-        <list-item title="2019年初一英语考试" tag="初中英语" state="图片上传于2019-01-03 10:04">
-          <option-btn @click="pageJump('upload-scan')" type="btn-success">去上传</option-btn>
-        </list-item>
-        <list-item title="2019年初一英语考试" tag="初中英语" state="图片上传于2019-01-03 10:04">
+        <exam-list-item title="2019年初一英语考试" tag="初中英语" state="图片上传于2019-01-03 10:04">
+          <option-btn @click="myUtils.pageJump('upload-scan', {id: 12313123122, examId: 123134124})" type="btn-success">去上传</option-btn>
+        </exam-list-item>
+        <exam-list-item title="2019年初一英语考试" tag="初中英语" state="图片上传于2019-01-03 10:04">
           <option-btn @click="reuploadPic" type="btn-primary">已上传</option-btn>
-        </list-item>
+        </exam-list-item>
       </div>
     </div>
   </div>
@@ -25,7 +25,7 @@ import AppHeader from '@/components/Header'
 import PageInfoBar from '@/components/PageInfoBar'
 import FilterBox from '@/components/FilterBox'
 import SearchBox from '@/components/SearchBox'
-import ListItem from '@/components/ListItem'
+import ExamListItem from '@/components/ExamListItem'
 
 export default {
   name: 'upload',
@@ -34,7 +34,7 @@ export default {
     PageInfoBar,
     FilterBox,
     SearchBox,
-    ListItem
+    ExamListItem
   },
     data () {
     return {
@@ -53,9 +53,6 @@ export default {
     }
   },
   methods: {
-    pageJump(name) {
-      this.$router.push({ name });
-    },
     handleFilterChange(value) {
       console.log(value)
     },
@@ -66,9 +63,10 @@ export default {
       this.$confirm('','是否重新上传', {
         dangerouslyUseHTMLString: true,
         confirmButtonText: '重新上传',
-        cancelButtonText: '取消'
+        cancelButtonText: '取消',
+        customClass: 'upload-confirm'
       }).then(() => {
-        this.pageJump('upload-scan')
+        this.myUtils.pageJump('upload-scan', {id: 12313123122, examId: 123134124})
       }).catch(() => {
       })
     }
@@ -88,7 +86,7 @@ export default {
     justify-content: flex-end;
   }
   .exam-list {
-    .list-item {
+    .exam-list-item {
       margin-top: 10px;
     }
   }

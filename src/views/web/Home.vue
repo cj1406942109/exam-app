@@ -28,7 +28,7 @@
             </ul>
           </div>
           <div class="student-list">
-            <div class="student-box" v-for="item in studentList" :key="item.id" @click="goStudentDetail(item)">
+            <div class="student-box" v-for="item in studentList" :key="item.id" @click="myUtils.pageJump('student', {id: 1231784353})">
               <svg-icon name="user" :class="'color-' + item.status"></svg-icon>
               <p>{{item.name}}</p>
             </div>
@@ -124,9 +124,6 @@ export default {
     },
     searchStudent (text) {
       console.log(text)
-    },
-    goStudentDetail (item) {
-      this.$router.push({ name: 'student', params: { id: 123456 } })
     }
   }
 }
