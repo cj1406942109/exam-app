@@ -124,19 +124,17 @@ export default {
         radar: [
           {
             indicator: [
-              { color: '#333', text: '听力', max: 150 },
-              { color: '#333', text: '写作', max: 150 },
-              { color: '#333', text: '改错', max: 150 },
-              { color: '#333', text: '短文填空', max: 120 },
-              { color: '#333', text: '完型填空', max: 108 },
-              { color: '#333', text: '阅读理解', max: 72 }
+              { color: '#333', text: '听力', max: 100 },
+              { color: '#333', text: '写作', max: 100 },
+              { color: '#333', text: '改错', max: 100 },
+              { color: '#333', text: '短文填空', max: 100 },
+              { color: '#333', text: '完型填空', max: 100 },
+              { color: '#333', text: '阅读理解', max: 100 }
             ],
             center: ['160', '50%'],
             radius: 80,
             splitLine: {
-              lineStyle: {
-                color: ['#ddd']
-              }
+              show: false
             },
             splitArea: {
               show: false
@@ -149,27 +147,28 @@ export default {
             type: 'radar',
             data: [
               {
-                value: [120, 118, 130, 100, 99, 70],
+                value: [90, 80, 70, 60, 80, 70],
                 name: '个人',
-                symbol: 'roundRect',
-                symbolSize: 5,
-                label: {
-                  normal: {
-                    show: true,
-                    formatter:function(params) {
-                        return params.value;
-                    }
-                  }
-                },
+                symbol: 'path://M 100,100 m -50,0 a 50,50 0 1,0 100,0 a 50,50 0 1,0 -100,0',
+                symbolSize: 6,
                 areaStyle: {
                   normal: {
                     color: '#EFF7FD',
                     opacity: 0.9
+                  },
+                  emphasis: {
+                    color: '#EFF7FD',
+                    opacity: 0.9
+                  }
+                },
+                emphasis: {
+                  label: {
+                    show: true
                   }
                 }
               },
               {
-                value: [90, 113, 140, 30, 70, 60],
+                value: [90, 70, 30, 30, 70, 60],
                 name: '同水平学生',
                 symbol: 'none',
                 areaStyle: {
@@ -177,7 +176,33 @@ export default {
                     opacity: 0
                   }
                 }
-              }
+              },
+              {
+                value : [80, 80, 80, 80, 80, 80],
+                symbol: 'none',
+                lineStyle: {
+                  normal: {
+                    color: '#ddd',
+                    type: 'dashed'
+                  },
+                  emphasis: {
+                    color: '#ddd'
+                  }
+                }
+              },
+              {
+                value : [100, 100, 100, 100, 100, 100],
+                symbol: 'none',
+                lineStyle: {
+                  normal: {
+                    color: '#ddd',
+                    type: 'solid'
+                  },
+                  emphasis: {
+                    color: '#ddd'
+                  }
+                }
+              },
             ]
           }
         ]
