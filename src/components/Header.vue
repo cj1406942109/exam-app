@@ -28,6 +28,9 @@
 
 <script>
 import { routes } from '@/router'
+import {
+  logout
+} from '@/api'
 export default {
   name: 'app-header',
   data() {
@@ -37,8 +40,22 @@ export default {
   },
   methods: {
     handleLogout() {
-      console.log('logout')
-      this.myUtils.pageJump('login')
+      logout().then(data => {
+        if (data) {
+          this.myUtils.removeItem('account')
+          this.myUtils.pageJump('login')
+        } else {
+           this.$notify.error({
+            title: '登出失败',
+            duration: 3000,
+            message: '请先登录，即将跳转到登录页'
+          })
+          let vm = this
+          setTimeout(function(){
+            vm.myUtils.pageJump('login')
+          }, 3000)
+        }
+      })
     }
   }
 }

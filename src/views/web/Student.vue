@@ -32,6 +32,9 @@
 </template>
 
 <script>
+import {
+  getExerciseList
+} from '@/api'
 // @ is an alias to /src
 import AppHeader from '@/components/Header'
 import ExamListItem from '@/components/ExamListItem'
@@ -41,6 +44,25 @@ export default {
   components: {
     AppHeader,
     ExamListItem
+  },
+  data () {
+    return {
+      examList: [{
+        "uid": "678ea1f",
+        "name": "考试名称",
+        "subject_id": 1,
+        "status": 1
+      }]
+    }
+  },
+  created () {
+    let studentId = this.$route.params.id
+    console.log(this.$route.params.id)
+    getExerciseList(studentId).then(data => {
+      if (data) {
+        this.examList = data
+      }
+    })
   },
   methods: {
   }

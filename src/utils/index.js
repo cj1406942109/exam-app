@@ -19,7 +19,20 @@ function pageJump(name, params) {
   })
 }
 
+function setItem(name, value) {
+  sessionStorage.setItem(name, value)
+}
+function getItem(name) {
+  return sessionStorage.getItem(name)
+}
+function removeItem(name) {
+  sessionStorage.removeItem(name)
+}
+
 export default {
   goBack,
-  pageJump
+  pageJump,
+  setItem,
+  getItem,
+  removeItem
 }

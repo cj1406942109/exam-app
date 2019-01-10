@@ -10,7 +10,7 @@
       </exam-list-item>
       <div class="code-area">
         <p>使用手机拍照上传答题卡</p>
-        <img src="./code.png" alt="二维码">
+        <q-r-code text="小安安我好喜欢你"></q-r-code>
         <p>请扫码二维码</p>
         <el-button @click="finishScan">测试完成扫码</el-button>
       </div>
@@ -23,13 +23,15 @@
 import AppHeader from '@/components/Header'
 import PageInfoBar from '@/components/PageInfoBar'
 import ExamListItem from '@/components/ExamListItem'
+import QRCode from '@/components/QRCode'
 
 export default {
   name: 'upload-scan',
   components: {
     AppHeader,
     PageInfoBar,
-    ExamListItem
+    ExamListItem,
+    QRCode
   },
   methods: {
     finishScan() {

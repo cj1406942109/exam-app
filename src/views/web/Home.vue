@@ -4,40 +4,42 @@
     <div class="page-main">
       <div class="option-wrapper">
         <ul>
-          <li>今天</li>
-          <li>{{moment().subtract(1, 'days').format('M月D日')}}</li>
-          <li>{{moment().subtract(2, 'days').format('M月D日')}}</li>
-          <li v-if="studentList.lenth === 0">更早</li>
-          <li v-else>更多学生</li>
+          <li :class="{selected: selectedTab === 1}" @click="changeTab(1, moment().format('YYYY-MM-DD'))">今天</li>
+          <li :class="{selected: selectedTab === 2}" @click="changeTab(2, moment().subtract(1, 'days').format('YYYY-MM-DD'))">{{moment().subtract(1, 'days').format('M月D日')}}</li>
+          <li :class="{selected: selectedTab === 3}" @click="changeTab(3, moment().subtract(2, 'days').format('YYYY-MM-DD'))">{{moment().subtract(2, 'days').format('M月D日')}}</li>
+          <li :class="{selected: selectedTab === 4}" @click="changeTab(4)" v-if="exerciseStudentList.lenth === 0">更早</li>
+          <li :class="{selected: selectedTab === 4}" @click="changeTab(4)" v-else>更多学生</li>
         </ul>
         <option-btn @click="addStudentHandler" type="btn-success btn-medium btn-with-icon"><svg-icon name="plus"></svg-icon>添加学生</option-btn>
       </div>
       <div class="student-wrapper">
-        <div v-if="studentList.length === 0" class="no-student">
+        <div v-if="exerciseStudentList.length === 0" class="no-student">
           <img src="./no-content.png" alt="尚未添加考生">
           <p>尚未添加考生</p>
         </div>
         <div v-else class="student-list-wrapper">
           <div class="search-wrapper">
-            <search-box @search-text="searchStudent"></search-box>
+            <search-box @search-text="searchExerciseStudent"></search-box>
             <ul class="status-indicators">
-              <li><svg-icon name="square" class="color-success"></svg-icon>批改完成</li>
-              <li><svg-icon name="square" class="color-info"></svg-icon>批改中</li>
-              <li><svg-icon name="square" class="color-default"></svg-icon>未上传</li>
-              <li><svg-icon name="square" class="color-error"></svg-icon>异常</li>
+              <li v-for="item in [0, 1, 2, 3]" :key="item.id" @click="changeStatus(item)" :class="{'not-selected': !selectedStatus.includes(item)}">
+                <svg-icon name="square" :class="'color-' + formatStatus(item).status"></svg-icon>{{formatStatus(item).message}}
+              </li>
             </ul>
           </div>
           <div class="student-list">
-            <div class="student-box" v-for="item in studentList" :key="item.id" @click="myUtils.pageJump('student', {id: 1231784353})">
-              <svg-icon name="user" :class="'color-' + item.status"></svg-icon>
-              <p>{{item.name}}</p>
+            <div class="student-box"
+              v-show="selectedStatus.includes(item.status) && item.name.includes(pageSearchText)"
+              v-for="item in exerciseStudentList" :key="item.id"
+              @click="myUtils.pageJump('student', {id: item.uid})">
+              <svg-icon name="user" :class="'color-' + formatStatus(item.status).status"></svg-icon>
+              <p>{{item.name}}<br><span>{{item.complete}}/{{item.total}}</span></p>
             </div>
           </div>
         </div>
       </div>
 
       <el-dialog title="添加学生" :visible.sync="dialogVisible" width="500px">
-        <el-tabs v-model="activeTabName" type="card">
+        <el-tabs v-model="activeDialogTab" type="card">
           <el-tab-pane label="新学生" name="new">
             <el-form ref="newStudentForm" :model="newStudentForm" size="small" hide-required-asterisk>
               <el-form-item label="学生姓名" prop="name"
@@ -56,24 +58,24 @@
             </el-form>
           </el-tab-pane>
           <el-tab-pane label="选择已有学生" name="exist">
-            <search-box @search-text="searchStudent" size="small"></search-box>
-            <el-table :data="studentsInSystem" style="width: 100%" max-height="200">
+            <search-box @search-text="searchAllStudent" size="small"></search-box>
+            <el-table :data="filteredSchoolStudentList" style="width: 100%" max-height="200" @row-click="handleRowClick">
               <el-table-column align="right" label=" " width="50">
                 <!-- eslint-disable -->
                 <template slot-scope="scope">
-                  <svg-icon name="check"></svg-icon>
+                  <svg-icon name="check" :class="{'selected': scope.row.uid === selectedStudent.uid}"></svg-icon>
                 </template>
                 <!-- eslint-enable -->
               </el-table-column>
               <el-table-column align="center" prop="name" label="姓名" width="80"></el-table-column>
               <el-table-column align="center" prop="phone" label="联系方式"></el-table-column>
-              <el-table-column align="center" prop="createTime" label="加入时间"></el-table-column>
+              <el-table-column align="center" prop="time_create" label="加入时间"></el-table-column>
             </el-table>
           </el-tab-pane>
         </el-tabs>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogVisible=false;$refs['newStudentForm'].clearValidate();">取 消</el-button>
-          <el-button type="primary" @click="dialogVisible = false">添加，去上传</el-button>
+          <el-button @click="handleClose">取 消</el-button>
+          <el-button type="primary" @click="addAndGoUpload" :disabled="activeDialogTab==='exist'&&!selectedStudent">添加，去上传</el-button>
         </div>
       </el-dialog>
     </div>
@@ -86,6 +88,12 @@ import AppHeader from '@/components/Header'
 import SearchBox from '@/components/SearchBox'
 import moment from 'moment'
 
+import {
+  getExerciseStudentList,
+  getStudentList,
+  addStudent
+} from '@/api'
+
 export default {
   name: 'home',
   components: {
@@ -95,36 +103,134 @@ export default {
   data () {
     return {
       moment,
+      selectedTab: 1,
+      selectedStatus: [0, 1, 2, 3],
+      pageSearchText: '',
+      dialogSearchText: '',
       newStudentForm: {
         name: '',
         phone: ''
       },
-      studentList: [{
-        name: '杨旭辉',
-        status: 'success'
-      },{
-        name: '黄子英',
-        status: 'info'
-      }],
-      studentsInSystem: [
-        { name: '杨旭辉', phone: '13753862869', createTime: '2019-01-03 10:04'},
-        { name: '杨旭辉', phone: '13753862869', createTime: '2019-01-03 10:04'},
-        { name: '杨旭辉', phone: '13753862869', createTime: '2019-01-03 10:04'},
-        { name: '杨旭辉', phone: '13753862869', createTime: '2019-01-03 10:04'},
-        { name: '杨旭辉', phone: '13753862869', createTime: '2019-01-03 10:04'},
-        { name: '杨旭辉', phone: '13753862869', createTime: '2019-01-03 10:04'}
+      exerciseStudentList: [{
+          "uid":"34324aef",
+          "name":"李达",
+          "phone":18515578987,
+          "status":1,
+          "complete":5,
+          "total":10
+        },{
+          "uid":"34677aef",
+          "name":"李逵",
+          "phone":18515578967,
+          "status":2,
+          "complete":5,
+          "total":5
+        }
+      ],
+      schoolStudentList: [
+        { "uid":"34324aef", "name":"李达", "phone":18515578987, "time_create":"2018-09-01 18:00:00" },
+        { "uid":"34677aef", "name":"李逵", "phone":18515578967, "time_create":"2018-09-01 18:00:00" }
       ],
       dialogVisible: false,
-      activeTabName: 'new'
+      activeDialogTab: 'new',
+      selectedStudent: ''
+    }
+  },
+  computed: {
+    filteredSchoolStudentList () {
+      let tempList = []
+      this.schoolStudentList.forEach(ele => {
+        if (ele.name.includes(this.dialogSearchText)) {
+          tempList.push(ele)
+        }
+      })
+      return tempList
     }
   },
   methods: {
+    changeTab (tabIndex, date = '') {
+      this.selectedTab = tabIndex
+      this.getExerciseStudentList(date)
+    },
+    changeStatus (status) {
+      let index = this.selectedStatus.indexOf(status)
+      if (index >= 0) {
+        this.selectedStatus.splice(index, 1)
+      } else {
+        this.selectedStatus.push(status)
+      }
+    },
+    formatStatus (code) {
+      if (code === 0) {
+        return {
+          status: 'success',
+          message: '批改完成'
+        }
+      } else if (code === 1) {
+        return {
+          status: 'info',
+          message: '批改中'
+        }
+      } else if (code === 2) {
+        return {
+          status: 'default',
+          message: '未上传'
+        }
+      } else if (code === 3) {
+        return {
+          status: 'error',
+          message: '异常'
+        }
+      } else {
+        return ''
+      }
+    },
     addStudentHandler () {
       this.dialogVisible = true
     },
-    searchStudent (text) {
-      console.log(text)
+    searchExerciseStudent (text) {
+      this.pageSearchText = text
+    },
+    searchAllStudent (text) {
+      this.dialogSearchText = text
+    },
+    handleRowClick (row) {
+      this.selectedStudent = JSON.parse(JSON.stringify(row))
+    },
+    handleClose () {
+      this.dialogVisible = false;
+      this.$refs['newStudentForm'].clearValidate();
+      this.selectedStudent = '';
+    },
+    addAndGoUpload () {
+      if (this.activeDialogTab === 'new') {
+        // 添加新学生
+        this.$refs['newStudentForm'].validate((valid) => {
+          if (valid) {
+            // addStudent(this.newStudentForm.name, this.newStudentForm.phone).then(data => {
+            //   if (data) {
+            //     console.log(data)
+            //   }
+            // })
+          } else {
+            return false
+          }
+        });
+      } else {
+        // 选定学生，跳转到上传页面
+        console.log(this.selectedStudent)
+      }
+    },
+    getExerciseStudentList (date = '') {
+      getExerciseStudentList(date).then(data => {
+        if (data) {
+          this.exerciseStudentList = data
+        }
+      })
     }
+  },
+  created () {
+    this.getExerciseStudentList()
   }
 }
 </script>
@@ -143,7 +249,7 @@ export default {
           cursor: pointer;
           margin-right: 50px;
           color: #666;
-          &:first-of-type {
+          &.selected {
             color: #333;
             font-size: 28px;
           }
@@ -169,9 +275,16 @@ export default {
           .status-indicators {
             display: flex;
             li {
+              cursor: pointer;
               margin-left: 40px;
               .svg-icon {
                 margin-right: 5px;
+              }
+              &.not-selected {
+                color: #ddd;
+                .svg-icon {
+                  color: #eee;
+                }
               }
             }
           }
@@ -187,7 +300,10 @@ export default {
             color: #666;
             p {
               margin: 10px 0 0;
-              font-size: 12px;
+              font-size: 14px;
+              span {
+                font-size: 12px;
+              }
             }
             .svg-icon {
               font-size: 24px;

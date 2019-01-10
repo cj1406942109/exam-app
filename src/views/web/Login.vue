@@ -6,16 +6,16 @@
     <div class="page-main">
       <div class="form-wrapper">
         <h3>账号登录</h3>
-        <el-input v-model="username" type="text" placeholder="请输入账号"></el-input>
-        <el-input v-model="password" type="password" placeholder="请输入密码"></el-input>
+        <el-input @focus="isError=false" v-model="username" type="text" placeholder="请输入账号"></el-input>
+        <el-input @focus="isError=false" v-model="password" type="password" placeholder="请输入密码"></el-input>
         <div class="error-info" :style="{visibility:isError?'visible':'hidden'}">
           <svg-icon name="error"></svg-icon>
           {{errorMsg}}
         </div>
-        <option-btn type="btn-success btn-large" :disabled="loading" @click="handleLogin">
-          <!-- {{loading?'登录中...':'登录'}} -->
-          登录
-        </option-btn>
+        <el-button type="primary" :loading="loading" @click="handleLogin">登录</el-button>
+        <!-- <option-btn type="btn-success btn-large" :disabled="loading" @click="handleLogin">
+          {{loading?'登录中...':'登录'}}
+        </option-btn> -->
       </div>
     </div>
   </div>
@@ -30,8 +30,8 @@ export default {
   name: 'login',
   data () {
     return {
-      username: '',
-      password: '',
+      username: '0145test_training',
+      password: '0145test_training',
       isError: false,
       errorMsg: '您输入的账号或密码错误',
       loading: false
@@ -44,7 +44,13 @@ export default {
       if (username.trim() && password.trim()) {
         this.loading = true
         login(username, password).then(data => {
-          console.log(data)
+          this.loading = false
+          if (data) {
+            this.myUtils.setItem('account', JSON.stringify(data))
+            this.myUtils.pageJump('home')
+          } else {
+            this.isError = true
+          }
         })
       } else {
         this.$message({
@@ -97,6 +103,9 @@ export default {
       }
       .el-input, button {
         margin: 10px 0;
+      }
+      button {
+        width: 100%;
       }
       .error-info {
         color: #F57060;

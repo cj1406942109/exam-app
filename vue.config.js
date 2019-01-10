@@ -1,7 +1,14 @@
 module.exports = {
     devServer: {
         host: '0.0.0.0',
-        disableHostCheck: true
+        disableHostCheck: true,
+        proxy: {
+        "/api": {
+                target: "http://agency.hexinedu.com",
+                changeOrigin: true
+                // pathRewrite: {"^/api" : ""}
+            }
+        }
     },
 
     pluginOptions: {
