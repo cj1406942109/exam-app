@@ -60,9 +60,6 @@ export default {
     .svg-icon {
       margin-right: 5px;
     }
-    &:hover {
-      // background-color: #f9fafc;
-    }
   }
   &.small {
     input,

@@ -1,19 +1,22 @@
 <template>
   <!-- 存在浏览器兼容性问题 -->
   <div class="local-camera" v-show="visible" :class="{bg:image}">
-    <div class="camera-view">
+    <div class="camera-view" v-show="image">
       <!-- <img src="" alt=""> -->
       <div class="pic-box">
-        <img :src="image" alt="预览" v-show="image">
+        <img :src="image" alt="预览">
       </div>
     </div>
-    <input type="file" accept="image/*" name="gallery" ref="gallery" @change="showImage">
-    <input type="file" capture="camera" accept="image/*" name="camera" ref="camera" @change="showImage">
-    <div class="option-wrapper">
-      <img src="./gallery.png" alt="图库" :style="{visibility:image?'hidden':'visible'}" @click="clickInput('gallery')">
-      <img src="./camera.png" alt="拍照" class="big" v-show="!image" @click="clickInput('camera')">
-      <img src="./finish.png" alt="完成" class="big" v-show="image" @click="finish">
-      <img src="./clear.png" alt="关闭" :style="{visibility:image?'visible':'hidden'}" @click="handleClose">
+    <div class="camera-gallery" v-show="!image">
+      <input type="file" accept="image/*" name="gallery" ref="gallery" @change="showImage">
+      <input type="file" capture="camera" accept="image/*" name="camera" ref="camera" @change="showImage">
+      <img src="./camera.png" alt="拍照" class="big" @click="clickInput('camera')">
+      <img src="./gallery.png" alt="图库" @click="clickInput('gallery')">
+    </div>
+    <div class="option-wrapper" v-show="image">
+      <img src="./gallery.png" alt="图库" :style="{visibility:'hidden'}" @click="clickInput('gallery')">
+      <img src="./finish.png" alt="完成" class="big" @click="finish">
+      <img src="./clear.png" alt="关闭" @click="handleClose">
     </div>
   </div>
 </template>
@@ -33,6 +36,12 @@ export default {
       type: Boolean,
       default: true
     }
+  },
+  mounted () {
+    this.$nextTick(function () {
+      this.clickInput('camera')
+      console.log('hello')
+    })
   },
   watch: {
     visible: function(val) {
@@ -113,7 +122,8 @@ export default {
       box-sizing: border-box;
       overflow: auto;
       img {
-        width: 100%;
+        margin: 0 auto;
+        max-height: 90%;
         max-width: 500px;
       }
     }
@@ -121,10 +131,23 @@ export default {
   input {
     display: none;
   }
+  .camera-gallery {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 50px);
+    overflow: hidden;
+    img {
+      margin-bottom: 40px;
+    }
+  }
   .option-wrapper {
     box-sizing: border-box;
     display: flex;
-    justify-content: space-evenly;
+    padding: 0 30px;
+    justify-content: space-around;
     align-items: center;
     position: fixed;
     height: 100px;

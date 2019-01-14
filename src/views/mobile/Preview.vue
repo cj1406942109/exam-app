@@ -1,11 +1,12 @@
 <template>
   <div class="mobile-page">
-    <mobile-nav back-path="select-page">第 1 页</mobile-nav>
+    <mobile-nav back-path="select-page">第 {{page}} 页</mobile-nav>
     <div class="pic-wrapper">
-      <p><svg-icon name="check"></svg-icon>第 1 页已上传</p>
+      <p><svg-icon name="check"></svg-icon>第 {{page}} 页已上传</p>
       <div class="pic">
-        <img src="./sample-correct.jpg" alt="第一页">
+        <img src="./sample-correct.jpg" :alt="'第 '+page+' 页'">
       </div>
+      <input type="file" capture="camera" accept="image/*" name="camera" ref="camera" @change="goUpload" style="display:none">
       <mobile-footer>
         <option-btn type="btn-large" @click="rePhotograph">重新拍照</option-btn>
       </mobile-footer>
@@ -25,7 +26,14 @@ export default {
   },
   data () {
     return {
+      page: '',
+      image: ''
     }
+  },
+  created () {
+    this.percentage = 0
+    this.page = this.myUtils.getItem('currentPage')
+    this.image = this.myUtils.getItem('currentImage')
   },
   methods: {
     rePhotograph() {
@@ -35,9 +43,19 @@ export default {
         cancelButtonText: '取消',
         customClass: 'photograph-confirm'
       }).then(() => {
-        this.myUtils.pageJump('photograph')
+        this.$refs['camera'].click()
       }).catch(() => {
       })
+    },
+    goUpload (e) {
+      let img = e.currentTarget.files[0]
+      let fd = new FileReader()
+      fd.readAsDataURL(img)
+      let vm = this;
+      fd.onload = function () {
+        vm.myUtils.setItem('currentImage', this.result)
+        vm.myUtils.pageJump('upload-pic')
+      }
     }
   }
 }
@@ -67,7 +85,7 @@ export default {
       overflow: auto;
       img {
         margin: 0 auto 10px;
-        width: 90%;
+        max-height: 90%;
         max-width: 500px;
       }
     }

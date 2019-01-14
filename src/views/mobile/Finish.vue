@@ -20,7 +20,9 @@ export default {
   },
   methods: {
     closePage() {
-      window.close();
+      window.opener = null;
+      window.open("", "_self")
+      window.close()
     }
   }
 }

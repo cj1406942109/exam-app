@@ -237,7 +237,7 @@ export default {
       }
       .report-item-content {
         display: flex;
-        justify-content: space-evenly;
+        justify-content: space-around;
         padding: 30px;
         .circle {
           width: 150px;

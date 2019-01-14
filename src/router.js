@@ -78,9 +78,9 @@ const routes = [
     component: () => import('@/views/mobile/Preview')
   },
   {
-    path: '/mobile/photograph',
-    name: 'photograph',
-    component: () => import('@/views/mobile/Photograph')
+    path: '/mobile/upload-pic',
+    name: 'upload-pic',
+    component: () => import('@/views/mobile/UploadPic')
   },
   {
     path: '/mobile/finish',
@@ -94,5 +94,6 @@ export {
 }
 
 export default new Router({
+  base: process.env.BASE_URL,
   routes
 })

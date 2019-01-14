@@ -13,9 +13,10 @@
     </div>
     <div class="progress">
       <p>拍照并上传图片：<strong>1</strong>/3</p>
-      <el-button type="primary" @click="myUtils.pageJump('preview')">第 1 页</el-button>
-      <el-button type="plian">第 2 页</el-button>
+      <el-button type="primary" @click="handleClick(1, 'image')">第 1 页</el-button>
+      <el-button type="plian" @click="handleClick(2)">第 2 页</el-button>
       <el-button type="plain">第 3 页</el-button>
+      <input type="file" capture="camera" accept="image/*" name="camera" ref="camera" @change="goUpload" style="display:none">
     </div>
     <mobile-footer>
       <el-button type="primary" :disabled="false" @click="myUtils.pageJump('finish-page')">上传完成，提交</el-button>
@@ -30,6 +31,27 @@ export default {
   name: 'select-page',
   components: {
     MobileFooter
+  },
+  methods: {
+    handleClick (page, image=null) {
+      this.myUtils.setItem('currentPage', page)
+      if (image) {
+        this.myUtils.setItem('currentImage', image)
+        this.myUtils.pageJump('preview')
+      } else {
+        this.$refs['camera'].click()
+      }
+    },
+    goUpload (e) {
+      let img = e.currentTarget.files[0]
+      let fd = new FileReader()
+      fd.readAsDataURL(img)
+      let vm = this
+      fd.onload = function () {
+        vm.myUtils.setItem('currentImage', this.result)
+        vm.myUtils.pageJump('upload-pic')
+      }
+    }
   }
 }
 </script>

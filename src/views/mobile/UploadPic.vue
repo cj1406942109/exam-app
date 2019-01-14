@@ -1,39 +1,41 @@
 <template>
   <div class="mobile-page">
-    <mobile-nav>第 1 页</mobile-nav>
+    <mobile-nav>第 {{page}} 页</mobile-nav>
     <div class="camera-wrapper">
-      <local-camera :visible.sync="showCamera" @finish="handleFinish"></local-camera>
-      <uploading :percentage="percentage" v-show="!showCamera"></uploading>
+      <image-preview v-show="showImage" :image="image" @finish="handleFinish" @close="myUtils.goBack()"></image-preview>
+      <uploading :percentage="percentage" v-show="!showImage"></uploading>
     </div>
   </div>
 </template>
 
 <script>
 import MobileNav from '@/components/MobileNav'
-import LocalCamera from '@/components/LocalCamera/index'
+import ImagePreview from '@/components/ImagePreview'
 import Uploading from '@/components/Uploading'
 
 export default {
-  name: 'phorograph',
+  name: 'upload',
   components: {
     MobileNav,
-    LocalCamera,
+    ImagePreview,
     Uploading
   },
   data () {
     return {
-      showCamera: true,
-      percentage: 0
+      showImage: true,
+      percentage: 0,
+      page: '',
+      image: ''
     }
   },
   created () {
     this.percentage = 0
-    this.showCamera = true
+    this.page = this.myUtils.getItem('currentPage')
+    this.image = this.myUtils.getItem('currentImage')
   },
   methods: {
-    handleFinish(image) {
-      console.log(image)
-      this.showCamera = false
+    handleFinish() {
+      this.showImage = false
       let vm = this
       let timer = setInterval(function(){
         vm.percentage += 1

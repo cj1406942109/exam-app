@@ -10,7 +10,7 @@
       </exam-list-item>
       <div class="code-area">
         <p>使用手机拍照上传答题卡</p>
-        <q-r-code text="小安安我好喜欢你"></q-r-code>
+        <q-r-code text="http://192.168.23.1:8080/#/mobile"></q-r-code>
         <p>请扫码二维码</p>
         <el-button @click="finishScan">测试完成扫码</el-button>
       </div>
