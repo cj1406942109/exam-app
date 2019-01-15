@@ -30,7 +30,7 @@
             <div class="student-box"
               v-show="selectedStatus.includes(item.status) && item.name.includes(pageSearchText)"
               v-for="item in exerciseStudentList" :key="item.id"
-              @click="myUtils.pageJump('student', {id: item.uid})">
+              @click="selectStudent(item)">
               <svg-icon name="user" :class="'color-' + formatStatus(item.status).status"></svg-icon>
               <p>{{item.name}}<br><span>{{item.complete}}/{{item.total}}</span></p>
             </div>
@@ -46,14 +46,14 @@
                 :rules="[
                   { required: true, message: '请输入学生姓名', trigger: 'blur' }
                 ]">
-                <el-input v-model="newStudentForm.name" placeholder="请输入姓名"></el-input>
+                <el-input clearable v-model="newStudentForm.name" placeholder="请输入姓名"></el-input>
               </el-form-item>
               <el-form-item label="联系方式" prop="phone"
                 :rules="[
                   { required: true, message: '请输入手机号', trigger: 'blur' },
                   { pattern: /^1[0-9]{10}$/, message: '手机号格式错误', trigger: 'blur' }
                 ]">
-                <el-input v-model="newStudentForm.phone" placeholder="请输入手机号"></el-input>
+                <el-input clearable v-model="newStudentForm.phone" placeholder="请输入手机号"></el-input>
               </el-form-item>
             </el-form>
           </el-tab-pane>
@@ -148,10 +148,12 @@ export default {
     }
   },
   methods: {
+    // 首页日期标签点击事件处理函数
     changeTab (tabIndex, date = '') {
       this.selectedTab = tabIndex
       this.getExerciseStudentList(date)
     },
+    // 根据状态筛选学生列表
     changeStatus (status) {
       let index = this.selectedStatus.indexOf(status)
       if (index >= 0) {
@@ -160,6 +162,12 @@ export default {
         this.selectedStatus.push(status)
       }
     },
+    // 学生点击事件，选定当前学生
+    selectStudent (item) {
+      this.myUtils.setItem('currentStudent', JSON.stringify(item))
+      this.myUtils.pageJump('student', {id: item.uid})
+    },
+    // 格式化学生状态
     formatStatus (code) {
       if (code === 0) {
         return {
@@ -185,40 +193,53 @@ export default {
         return ''
       }
     },
+    // 添加学生按钮点击事件处理函数
     addStudentHandler () {
       this.dialogVisible = true
     },
+    // 搜索考试学生列表处理函数
     searchExerciseStudent (text) {
       this.pageSearchText = text
     },
+    // 搜索全校学生列表处理函数
     searchAllStudent (text) {
       this.dialogSearchText = text
     },
+    // 全校学生列表，table行点击事件处理函数
     handleRowClick (row) {
       this.selectedStudent = JSON.parse(JSON.stringify(row))
     },
+    // 弹窗关闭事件处理函数
     handleClose () {
       this.dialogVisible = false;
       this.$refs['newStudentForm'].clearValidate();
       this.selectedStudent = '';
     },
+    // 添加，去上传按钮点击事件处理函数
+    // TODO:将选定的学生存到本地存储
     addAndGoUpload () {
       if (this.activeDialogTab === 'new') {
         // 添加新学生
         this.$refs['newStudentForm'].validate((valid) => {
           if (valid) {
-            // addStudent(this.newStudentForm.name, this.newStudentForm.phone).then(data => {
-            //   if (data) {
-            //     console.log(data)
-            //   }
-            // })
+            addStudent(this.newStudentForm.name, this.newStudentForm.phone).then(data => {
+              if (data) {
+                this.myUtils.setItem('currentStudent', JSON.stringify({
+                  name: this.newStudentForm.name,
+                  phone: this.newStudentForm.phone,
+                  uid: data.uid
+                }))
+                this.myUtils.pageJump('upload', {id: data.uid})
+              }
+            })
           } else {
             return false
           }
         });
       } else {
         // 选定学生，跳转到上传页面
-        console.log(this.selectedStudent)
+        this.myUtils.setItem('currentStudent', JSON.stringify(this.selectedStudent))
+        this.myUtils.pageJump('upload', {id: this.selectedStudent.uid})
       }
     },
     getExerciseStudentList (date = '') {

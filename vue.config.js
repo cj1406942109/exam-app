@@ -4,7 +4,7 @@ module.exports = {
         disableHostCheck: true,
         proxy: {
         "/api": {
-                target: "http://agency.hexinedu.com",
+                target: process.env.VUE_APP_HOST,
                 changeOrigin: true
                 // pathRewrite: {"^/api" : ""}
             }

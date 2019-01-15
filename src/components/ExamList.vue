@@ -7,7 +7,7 @@
       :state="item.state">
       <option-btn  v-for="btn in item.buttons" :key="btn.id"
       @click="triggleClick(btn, item)"
-      :type="btn.type">{{btn.text}}</option-btn>
+      :type="btn.type"><svg-icon v-if="btn.iconName" :name="btn.iconName"></svg-icon>{{btn.text}}</option-btn>
     </exam-list-item>
   </div>
 </template>

@@ -3,7 +3,7 @@
     <AppHeader />
     <div class="page-main">
       <page-info-bar @btn-click="myUtils.goBack()" btn-text="返回">
-        请选择<strong>杨旭辉</strong>同学参加的考试，并提交对应的答题卡图片
+        请选择<strong>{{currentStudent.name}}</strong>同学参加的考试，并提交对应的答题卡图片
       </page-info-bar>
       <filter-box :data="filterList" @filter-change="handleFilterChange"></filter-box>
       <search-box placeholder="请输入考试名称" @search-text="searchExam"></search-box>
@@ -38,6 +38,7 @@ export default {
   },
     data () {
     return {
+      currentStudent: JSON.parse(this.myUtils.getItem('currentStudent')),
       filterList: [
         {
           type: '学段',

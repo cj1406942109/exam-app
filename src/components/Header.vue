@@ -18,7 +18,7 @@
           placement="bottom-end"
           width="100"
           trigger="hover">
-          <span slot="reference"><svg-icon name="user"></svg-icon>合心测试</span>
+          <span slot="reference"><svg-icon name="user"></svg-icon>{{account.name}}</span>
           <span style="cursor:pointer" @click="handleLogout"><svg-icon name="power"></svg-icon>退出</span>
         </el-popover>
       </div>
@@ -35,7 +35,8 @@ export default {
   name: 'app-header',
   data() {
     return {
-      navList: routes
+      navList: routes,
+      account: JSON.parse(this.myUtils.getItem('account'))
     }
   },
   methods: {
